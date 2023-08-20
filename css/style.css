@@ -1,3 +1,27 @@
+.container {
+  max-width: 900px;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    margin: 0;
+    padding: 20px; /* Примерное значение отступа */
+  }
+}
+
+.element {
+  font-size: 1rem;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .element {
+    font-size: 1.5rem; 
+    padding: 2rem;     
+  }
+}
+
 .block {
     background-color: #f0f0f0;
     padding: 10px;
