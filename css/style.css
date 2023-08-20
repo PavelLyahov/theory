@@ -10,10 +10,9 @@ code {
   .container {
     width: 100%;
     margin: 0;
-    padding: 20px; /* Примерное значение отступа */
+    padding: 10px;
   }
 }
-
 .element {
   font-size: 1rem;
   padding: 1rem;
@@ -25,48 +24,42 @@ code {
     padding: 2rem;     
   }
 }
-
+.border {
+  
+}
 .block {
-    background-color: #f0f0f0;
-    padding: 10px;
+    background-color: #fffff1;
+    padding: 5px;
     cursor: pointer;
+    font-size: 16px; 
+    border: 2px solid rgb(218, 212, 253);
+    box-sizing: border-box;
 }
 .content {
-    display: none;
-    margin-top: 5px;
-  }
-  .content.show {
-    display: block;
-  }
-  .nested-block {
-    background-color: #e0e0e0;
-    padding: 5px;
-    margin-bottom: 5px;
-    cursor: pointer;
-  }
-  .nested-content {
-    display: none;
-    margin-left: 10px;
-  }
-  .nested-content.show {
-    display: block;
-  }
-.color-gold {
-    background-color: rgba(255, 255, 0, 0.3);
+  display: none;
+  margin-top: 5px;
 }
-.color-green {
-    background-color: rgba(0, 255, 255, 0.3);
+.content.show {
+  display: block;
 }
-.color-red {
-    background-color: rgba(255, 0, 0, 0.3);
+.nested-block {
+  background-color: rgb(255, 248, 240);
+  padding: 5px;
+  margin-bottom: 0px;
+  cursor: pointer;
+  border-left: 2px solid rgb(253, 212, 239); /* Граница слева */
+  border-bottom: 2px solid rgb(253, 212, 239);  /* Граница сверху */
+  box-sizing: border-box;
 }
-.color-blue {
-    background-color: rgba(100, 100, 255, 0.3);
+.nested-content {
+  display: none;
+  margin-left: 5px;
+  background-color: rgb(246, 243, 239);
 }
-.padding {
-    padding: auto;
-    margin: 0;
+.nested-content.show {
+  display: block;
 }
+
 .active {
     display: block;
 }
