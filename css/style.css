@@ -57,7 +57,7 @@ select {
   font-weight: normal;
 }
 .nested-block::before {
-  content: "• "; 
+  content: "(•) "; 
 }
 .nested-content {
   display: none;
