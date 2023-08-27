@@ -16,6 +16,7 @@
     <option value="block-6">Git</option>
     <option value="block-7">JavaScript</option>
     <option value="block-8">Selenium</option>
+    <option value="block-9">Network</option>
     <option value="block-9">Efficient proframming</option>
   </select>
 
@@ -2033,6 +2034,238 @@
 
   <div id="block-5" class="block content">
 
+    <div class="block">mySQL
+
+      <div class="content">
+
+        <div class="nested-block">ПОНЯТИЯ ТАБЛИЦЫ SQL
+          <div class="nested-content">
+            <img src="images/sqlTable.png" alt="Описание изображения">
+            <p>отношение  – это структура данных целиком, набор записей</p>
+            <p>кортеж – это каждая строка , содержащая данные</p>
+            <p>мощность – число кортежей в таблице</p>
+            <p>атрибут – это столбец в таблице (поле, столбец)</p>
+            <p>размерность – это число атрибутов (полей, столбцов)</p>
+            <p>домен атрибута – это допустимые значения (неповторяющиеся), которые можно занести в поле</p>
+          </div>
+        </div>
+
+        <div class="nested-block">ТИПЫ ДАННЫХ (INT, VARCHAR...)
+          <div class="nested-content">
+            <p>INTEGER (INT) TINYINT, SMALLINT, MEDIUMINT, INT и BIGINT</p>
+            <p>FLOAT и DOUBLE</p>
+            <p> CHAR(10) хранит 10 символов, VARCHAR(255) для хранения строк переменной длины с максимальной длиной 255</p>
+            <p>DATE:  даты в формате 'YYYY-MM-DD</p>
+            <p>TIME:  времени в формате 'HH:MM:SS'.</p>
+            <p>DATETIME и TIMESTAMP: DATETIME хранит дату и время в формате 'YYYY-MM-DD HH:MM:SS'. 
+              TIMESTAMP также хранит дату и время, но с ограничением от 1970-01-01 00:00:01 UTC до 2038-01-19 03:14:07 UTC.</p>
+            <p>BOOLEAN (BOOL): Этот тип данных используется для хранения булевых значений. В MySQL TRUE представляется как 1, а FALSE как 0</p>
+            <p>BLOB для хранения двоичных данных, таких как изображения, аудио или видео. TINYBLOB, BLOB, MEDIUMBLOB и LONGBLOB.</p>
+            <p>ENUM: ENUM - это перечислимый тип данных, который позволяет выбрать одно значение из ограниченного набора значений, которые вы определяете при создании столбца.</p>
+            <p>SET: SET похож на ENUM, но позволяет выбрать несколько значений из заданного набора.</p>
+            <p>JSON: Тип данных JSON позволяет хранить данные в формате JSON.</p>
+            <p>GEOMETRY: Тип данных GEOMETRY предназначен для хранения географических данных, таких как координаты точек, линий и полигонов.</p>
+            <p>TEXT: Тип данных TEXT предназначен для хранения текстовых данных переменной длины.</p>
+            <p></p>
+            <p></p>
+            <p></p>
+          </div>
+        </div>
+
+        <div class="nested-block">CREATE DATABASE, USE, CREATE TABLE, INSERT
+          <div class="nested-content">
+            <p>ДЛя начала работы с БД, нужно создать и выбрать бд</p>
+            <p>CREATE DATABASE database_name</p>
+            <p>USE database_name</p>
+            <p>создание таблицы</p>
+<pre><code>
+  CREATE TABLE book(
+    book_id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(50),
+    author VARCHAR(30),
+    price DECIMAL(8, 2),
+    amount INT
+  );
+  </code></pre>
+            <p>Вставка в таблицу</p>
+  <pre><code>
+  INSERT INTO book (title, author, price, amount) 
+  VALUES ('Мастер и Маргарита', 'Булгаков М.А.', 670.99, 3);
+  </code></pre>
+          </div>
+        </div>
+
+
+        <div class="nested-block">ОПЕРАТОРЫ BETWEEN, IN, AND, OR, NOT, ROUND, AS
+          <div class="nested-content">
+            <p>округлить price (скидка 30%) и дать новое название new_price</p>
+<pre><code>
+SELECT title, author, amount, ROUND( (price - price * 0.3), 2) AS new_price
+from book;
+</code></pre>
+            <p>условия где price ОТ и ДО, amount какое-то значение из списка</p>
+<pre><code>
+SELECT title, author FROM book
+WHERE (price >= 540.50 AND price <= 800) AND amount IN (2, 3, 5, 7);
+</code></pre>
+          </div>
+        </div>
+
+        <div class="nested-block">LIKE, ORDER BY (ASC, DESC)
+          <div class="nested-content">
+            <p>Сортировка</p> 
+<pre><code>
+SELECT author, title FROM book
+WHERE amount >= 2 AND amount <= 14
+ORDER BY author DESC, title;
+</code></pre>
+            <p>LIKE используется для сравнения строк. В отличие от операторов отношения равно (=) и не равно (<>), LIKE позволяет сравнивать строки не на полное совпадение (не совпадение),
+               а в соответствии с шаблоном.           </p>
+            <p>% - ноль или более символов</p> 
+            <p>_ - один символ</p> 
+<pre><code>
+  SELECT title, author FROM book
+  WHERE title LIKE "_% _%" AND author LIKE "%С.%"
+  ORDER BY title
+</code></pre>
+            <p>LIKE "_% _%" - 2 слова в title</p> 
+            <p>LIKE "%С.%" - инициалы С. в author</p>  
+          </div>
+        </div>
+
+        <div class="nested-block">ГУППОВЫЕ (АГРЕГИРУЮЩИЕ): DISTINCT, SUM, COUNT, MIN, MAX, AVG, HAVING
+          <div class="nested-content">
+            <p>Выбирает уникальные значения amount</p>
+<pre><code>
+SElECT DISTINCT amount FROM book
+</code></pre>
+            <p>Группирует по author, суммирует amount, и показывает количество amount в группе</p>
+<pre><code>
+SELECT author, sum(amount), count(amount)
+FROM book
+GROUP BY author;
+</code></pre>
+            <p>Считает мин мах и среднюю цену в группе</p>
+<pre><code>
+SELECT author, MIN(price) Минимальная_цена, MAX(price) Максимальная_цена, AVG(price) Средняя_цена
+FROM book
+GROUP BY author; 
+</code></pre>
+            <p>Вывести максимальную и минимальную цену книг каждого автора, кроме Есенина, количество экземпляров книг которого больше 10. </p>
+<pre><code>
+SELECT author,
+MIN(price) AS Минимальная_цена,
+MAX(price) AS Максимальная_цена
+FROM book
+WHERE author <> 'Есенин С.А.'
+GROUP BY author
+HAVING SUM(amount) > 10;
+</code></pre>
+          </div>
+        </div>
+
+        <div class="nested-block">ОБНОВЛЕНИЕ: UPDATE
+          <div class="nested-content">
+            <p>измнить все записи в солонке</p>
+<pre><code>
+UPDATE book 
+SET price = 0.7 * price;
+</code></pre>
+            <p>Удалить из таблицы supply все книги, названия которых есть в таблице book.</p>
+<pre><code>
+DELETE FROM supply 
+WHERE title IN (
+        SELECT title 
+        FROM book
+      );
+</code></pre>
+          </div>
+        </div>
+
+        <div class="nested-block">СОЕДИНЕНИЕ: INNER JOIN, LEFT\RIGHT\OUTER ,USING
+          <div class="nested-content">
+            <p>Таблица "Customers" (Заказчики):</p>
+<pre><code>
+| CustomerID| CustomerName| Country  |
++-----------+-------------+----------+
+| 1         | John        | USA      |
+| 2         | Emily       | UK       |
+| 3         | Maria       | Germany  |
+</code></pre>
+            <p>Таблица "Orders" (Заказы):</p>
+<pre><code>
+| OrderID  | CustomerID | Total |
++----------+------------+-------+
+| 101      | 1          | 150   |
+| 102      | 1          | 200   |
+| 103      | 2          | 50    |
+| 104      | 3          | 300   |
+  </code></pre>
+
+            <p>INNER JOIN соединяет две таблицы</p>
+<pre><code>
+SELECT Orders.OrderID, Customers.CustomerName
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+
+| OrderID  | CustomerName|
++----------+-------------+
+| 101      | John        |
+| 102      | John        |
+| 103      | Emily       |
+| 104      | Maria       |
+</code></pre>
+
+<p>LEFT JOIN возвращает все строки из левой таблицы и только те строки из правой таблицы,
+   которые соответствуют условию JOIN. Если в правой таблице нет совпадений, 
+   будут возвращены значения NULL для полей из правой таблицы.</p>
+<pre><code>
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID;
+  
+| CustomerName| OrderID  |
++-------------+----------+
+| John        | 101      |
+| John        | 102      |
+| Emily       | 103      |
+| Maria       | 104      |
+</code></pre>
+
+<p>FULL OUTER JOIN возвращает все строки из обеих таблиц, соответствующие условию JOIN. 
+  Если нет совпадений в одной из таблиц, будут возвращены значения NULL для соответствующих полей.</p>
+<pre><code>
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID = Orders.CustomerID;
+ 
+| CustomerName| OrderID  |
++-------------+----------+
+| John        | 101      |
+| John        | 102      |
+| Emily       | 103      |
+| Maria       | 104      |
+|null         | 105      |
+</code></pre>
+
+<p>USING позволяет указать набор столбцов, которые есть в обеих объединяемых таблицах. 
+  Если база данных хорошо спроектирована, а каждый внешний ключ имеет такое же имя, 
+  как и соответствующий первичный ключ (например, genre.genre_id = book.genre_id), 
+  тогда можно использовать предложение USING для реализации операции JOIN.
+  author INNER JOIN book   USING(author_id); </p>
+          </div>
+        </div>
+
+        <div class="nested-block">
+          <div class="nested-content">
+            <p></p>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
     <div class="block">БД, SQL
 
       <div class="content">
@@ -2111,31 +2344,7 @@
           </div>
         </div>
 
-        <div class="nested-block">синтаксис оператора SELECT
-          <div class="nested-content">
-            <p>SELECT - оператор DML SQL, возвращающий набор данных (выборку) из базы данных, удовлетворяющих заданному
-              условию. Имеет следующую структуру:</p>
-            <p>SELECT [DISTINCT | DISTINCTROW | ALL]</p>
-            <p>FROM table_references</p>
-            <p>[WHERE where_definition]</p>
-            <p>[GROUP BY {unsigned_integer | column | formula}]</p>
-            <p>[HAVING where_definition]</p>
-            <p> [ORDER BY {unsigned_integer | column | formula} [ASC | DESC], ...]</p>
-          </div>
-        </div>
-
-        <div class="nested-block">JOIN
-          <div class="nested-content">
-            <p>JOIN - оператор языка SQL, Предназначен длявыборки данных из двух таблиц и включения этих данных в один
-              результирующий набор.</p>
-            <p>SELECT field_name [,... n]</p>
-            <p>FROM</p>
-            <p>Table1</p>
-            <p>{INNER | {LEFT | RIGHT | FULL} OUTER | CROSS } JOIN</p>
-            <p> Table2</p>
-            <p>{ON <condition> | USING (field_name [,... n])}</p>
-          </div>
-        </div>
+       
 
         <div class="nested-block">четыре основных типа соединения в SQL JOIN
           <div class="nested-content">
@@ -2216,11 +2425,6 @@
           </div>
         </div>
 
-        <div class="nested-block">Выберите только уникальные имена
-          <div class="nested-content">
-            <p>SELECT DISTINCT name FROM users;</p>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -2275,6 +2479,100 @@
             <p>Обработка результата(ов);</p>
             <p>Закрытие соединения с базой данных.</p>
             <p></p>
+            <p></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="block">MONGO DB
+
+      <div class="content">
+
+        <div class="nested-block">ЧТо это
+          <div class="nested-content">
+            <p>документо-ориентированную систему управления базами данных</p>
+            <p>Коллекция - это аналог таблицы в реляционных базах данных. Она содержит группу документов.</p>
+            <p>Документ - это запись, представляющая собой JSON-подобный объект. В документе могут храниться различные поля с данными.</p>
+            <p> Каждый документ в коллекции может иметь разные поля, и схему можно изменять без необходимости изменения существующих документов.</p>
+            <img src="images/mondoDbStructure.png" alt="mongo db">
+          </div>
+        </div>
+
+        <div class="nested-block">ДОБАВЛЕНИЕ
+          <div class="nested-content">
+            <p>db.users.insertOne({"name": "Tom", "age": 28, "languages": ["english", "spanish"]})</p>
+            <p>insertMany(): добавляет несколько документов</p>
+            <p>db.users.find()</p>
+          </div>
+        </div>
+
+        <div class="nested-block">ПОИСК
+          <div class="nested-content">
+            <p>db.users.find({name: "Tom"}) - найдет все документы с такой записью</p>
+            <p>db.users.find({languages: null}) - документы, где свойство languages не определено.</p>
+            <p>function sqrt(n) { return n*n; } db.users.find({age: sqrt(5)+3})  - JS выражения</p>
+            <p>db.users.findOne({name: "Tom"}) - найдет один документ</p>
+            <p>Результат выборки, получаемой с помощью функции find, называется курсором. При необходимости мы можем передать курсор в отдельную переменную:  </p>
+<pre><code>
+  var cursor = db.users.find()
+ 
+while(cursor.hasNext()){
+  obj = cursor.next();
+  print(obj["name"]);
+}
+</code></pre> 
+          </div>
+        </div>
+
+        <div class="nested-block">ФИЛЬТРАЦИЯ, ИНДЕКСЫ
+          <div class="nested-content">
+            <p>db.users.find().limit(3)</p>
+            <p>db.users.find().skip(3)</p>
+            <p>db.users.find().sort({name: 1})</p>
+            <p>Индексы позволяют упорядочить данные по определенному полю, что впоследствии ускорит поиск</p>
+            <p>	db.users.createIndex({"name" : 1})</p>
+            <p>	db.users.getIndexes() - получить все индексы</p>
+            <p></p>
+          </div>
+        </div>
+
+        <div class="nested-block">Агрегатные функции
+          <div class="nested-content">
+            <p>	db.users.countDocuments()</p>
+            <p>	db.users.find({name: "Tom"}).count()</p>
+            <p>db.users.find({name: "Tom"}).skip(2).count(true)</p>
+            <p> db.users.distinct("name") - уникальные значения поля name</p>
+            <p>db.users.find().min({age:30}).hint({age:1})</p>
+          </div>
+        </div>
+
+        <div class="nested-block">Условные операторы
+          <div class="nested-content">
+            <p>$eq (равно)</p>
+            <p>$ne (не равно)</p>
+            <p>$gt (больше чем)</p>
+            <p>$lt (меньше чем)</p>
+            <p>$gte (больше или равно)</p>
+            <p>$lte (меньше или равно)</p>
+            <p>$in определяет массив значений, одно из которых должно иметь поле документа</p>
+            <p>$nin определяет массив значений, которые не должно иметь поле документа</p>
+          </div>
+        </div>
+
+        <div class="nested-block">Обновление и удаление данных
+          <div class="nested-content">
+            <p>db.users.replaceOne({name: "Bob"}, {name: "Bob", age: 25})</p>
+            <p>Для обновления отдельных полей в этих функциях применяется оператор $set. Если документ не содержит обновляемое поле, то оно создается</p>
+            <p>db.users.updateOne({name : "Tom", age: 22}, {$set: {age : 28}})</p>
+            <p>Для удаления отдельного ключа используется оператор $unset:</p>
+            <p>	
+              db.users.updateOne({name : "Tom"}, {$unset: {salary: 1}})</p>
+            <p>Оператор $push позволяет добавить еще одно значение к уже существующему. Например, если ключ в качестве значения хранит массив:</p>
+            <p>db.users.updateOne({name : "Tom"}, {$push: {languages: "russian"}})</p>
+            <p>db.users.deleteOne({name : "Tom"}) -УДАЛИТ  первый документ</p>
+            <p>db.users.deleteMany({name : "Tom"}) - УДАЛИТ все</p>
             <p></p>
           </div>
         </div>
@@ -2577,6 +2875,216 @@
   </div>
 
   <div id="block-9" class="block content">
+    <div class="block">DOCKER, LINUX
+      <div class="content">
+
+        <div class="nested-block">DOCKER COMMANDS
+          <div class="nested-content">
+            <p>Создание и управление контейнерами:</p>
+              <ul>docker run: Создание и запуск нового контейнера на основе определенного образа.
+                Пример: docker run -d -p 80:8080 --name my-container my-image</ul>
+              <ul>docker start: Запуск остановленного контейнера.</ul>
+              <ul>docker stop: Остановка выполняющегося контейнера.</ul>
+              <ul>docker restart: Перезапуск контейнера.</ul>
+              <ul>docker run -e MYSQL_USER=user -e MYSQL_PASSWORD=pass mysql Установка переменных окружения при запуске контейнера.</ul>
+            <p>Просмотр и мониторинг контейнеров</p>
+              <ul>docker ps: Просмотр выполняющихся контейнеров.</ul>
+              <ul>docker ps -a: Просмотр всех контейнеров (включая остановленные).</ul>
+              <ul>docker logs: Просмотр логов контейнера.</ul>
+              <ul>docker stats: Мониторинг использования ресурсов контейнерами.</ul>
+              <ul> docker inspect stupefied_turing - подробная инфа</ul>
+            <p>Работа с образами</p>
+              <ul>docker images: Просмотр списка доступных образов.</ul>
+              <ul>docker pull: Загрузка образа из Docker Hub.</ul>
+              <ul>docker build -t my-image . - Сборка Docker образа на основе Dockerfile.</ul>
+              <ul>docker push: Загрузка собранного образа в Docker Hub (требуется авторизация).</ul>
+            <p>Удаление ресурсов</p>
+              <ul>docker rm -v - удалить все остановленные контейнеры</ul>
+              <ul>docker rmi: Удаление образа.</ul>
+              <ul>docker image prune: Удаление неиспользуемых образов.</ul>
+            <p>Работа с сетями</p>
+              <ul>docker network create: Создание пользовательской сети.</ul>
+              <ul>docker network connect: Присоединение контейнера к сети.</ul>
+              <ul>docker network disconnect: Отсоединение контейнера от сети.</ul>
+            <p>Управление Docker Compose:</p>
+              <ul>docker-compose up: Запуск приложения, описанного в файле docker-compose.yml.</ul>
+              <ul>docker-compose down: Остановка и удаление контейнеров из docker-compose.yml.</ul>
+            <p>Работа с файловой системой контейнера:</p>
+              <ul>docker cp file.txt my-container:/path/to/destination копирование файлов между хостовой системой и контейнером.</ul>
+              <ul>docker exec -it my-container bash Выполнение команды внутри запущенного контейнера</ul>
+            <p>Управление хранилищем данны</p>
+              <ul>docker volume create: Создание Docker Volume для хранения данных.</ul>
+              <ul>docker volume ls: Просмотр списка созданных Docker Volume.</ul>
+              <ul>docker volume rm: Удаление Docker Volume.</ul>
+          </div>
+        </div>
+
+        <div class="nested-block">Docker BASE
+          <div class="nested-content">
+            <p>Docker - это платформа для разработки, доставки и выполнения приложений в контейнерах. 
+              Основное преимущество Docker перед виртуализацией заключается в более легковесной и 
+              эффективной изоляции приложений. Вместо полной виртуализации ОС,
+              Docker использует общее ядро ОС хоста для запуска контейнеров, что делает их быстрее и более эффективными.</p>
+            <p>Контейнер в Docker - это легковесное и изолированное окружение, включающее в себя приложение и его зависимости,
+               которое может быть выполнено практически в любой среде. Преимущества контейнеризации включают консистентность окружения, 
+              быстрое развертывание, изолированность ресурсов, удобство масштабирования и более эффективное использование ресурсов.</p>
+              <p>Для создания, запуска и управления контейнерами в Docker отвечает Docker Engine. Это ядро Docker-платформы, которое включает в себя сервер Docker (dockerd) и клиентский инструмент (docker).</p>
+            <p>Docker образы состоят из нескольких слоев, где каждый слой представляет собой изменение в файловой системе. Контейнеры запускаются из Docker образов. Образ является основой контейнера, 
+              и каждый контейнер состоит из своего слоя файловой системы (на верхнем уровне) и слоев образа (нижние уровни).</p>  
+            <p>Docker поддерживает несколько типов сетей: bridge, host, overlay и none. Сетевые режимы включают bridge (создание собственной сети контейнеров), 
+              host (использование сети хоста), overlay (использование в оркестрации) и none (отсутствие сети).</p>  
+            <p>Docker Volume - это механизм, который позволяет создавать и управлять персистентным хранилищем данных для контейнеров. 
+              Данные в Docker Volume сохраняются даже после удаления контейнера, что обеспечивает долгосрочное хранение.
+              анные в Docker Volume изолированы от контейнеров, что обеспечивает безопасное и надежное хранение.
+            </p>  
+            <p>Docker Swarm - это интегрированная оркестрационная платформа для управления контейнерами Docker. Он позволяет создавать и управлять кластером Docker, включая автоматическое масштабирование, 
+              балансировку нагрузки и другие функции, обеспечивая упрощенную оркестрацию и управление контейнерами.</p>  
+            <p>В качестве альтернатив Docker Compose и Docker Swarm существуют другие инструменты, такие как Kubernetes (K8s) и Apache Mesos. Kubernetes - это мощная система оркестрации, предоставляющая более широкий набор функций для управления контейнерами и приложениями в масштабе.</p>  
+            <p>Для оптимизации размера Docker образов вы можете использовать следующие методы:
+
+              Удаление ненужных файлов и зависимостей.
+              Использование минимальных базовых образов (Alpine Linux, BusyBox и т. д.).
+              Оптимизация команд в Dockerfile для уменьшения количества слоев.
+              Использование мульти-стадийных сборок для создания минимальных образов для выполнения.
+              Очистка кэша и временных файлов внутри образов.</p>
+            <p>Для мониторинга и управления производительностью Docker контейнеров вы можете использовать инструменты, такие как Prometheus, Grafana, Docker Stats, cAdvisor и Docker Compose</p>
+            
+            <img src="images/dockerVSvirtualMachine.png" alt="dockerVSvirtualMachine">
+          </div>
+        </div>
+
+        <div class="nested-block">DOCKERFILE
+          <div class="nested-content">
+            <p> это текстовый файл, содержащий инструкции и команды для автоматической сборки Docker-образа.</p>
+            <p>Каждая команда - отдельный слой образа</p>
+            <ul>FROM ubuntu:20.04 Определяет базовый образ, на основе которого будет создан новый образ.</ul>
+            <ul>WORKDIR /app Устанавливает рабочую директорию для последующих инструкций.</ul>
+            <ul>COPY app.py /app  Копирует файлы и директории из хостовой системы в контейнер.</ul>
+            <ul>RUN apt-get update && apt-get install -y curl Выполняет команды внутри контейнера во время сборки образа.</ul>
+            <ul>ENV PORT=80 Устанавливает переменные окружения в контейнере</ul>
+            <ul>EXPOSE 8080  Объявляет порт, на котором контейнер будет слушать во время выполнения.</ul>
+            <ul>CMD ["python", "app.py"] Задает команду, которая будет выполняться при запуске контейнера.</ul>
+            <ul>ENTRYPOINT: 
+              Определяет выполняемый файл (программу) (и аргументы по умолчанию), запускаемый при инициализации контейнера
+              Аналогично CMD, задает команду, но не может быть переопределен командой при запуске</ul>
+            <ul>VOLUME: Создает точку монтирования для хранения данных между контейнером и хостовой системой.
+
+              Пример: VOLUME /data</ul>
+          </div>
+        </div>
+
+        <div class="nested-block">Docker-compose
+          <div class="nested-content">
+            <p>это инструмент для определения и запуска многоконтейнерных приложений с помощью файла конфигурации в формате YAML</p>
+            <ul>docker-compose up -d: Запуск приложения в фоновом режиме (detached mode).</ul>
+            <ul>docker-compose down: Остановка и удаление всех контейнеров, сетей и томов, связанных с приложением.</ul>
+            <ul>docker-compose build: Сборка Docker-образов для всех сервисов в приложении.</ul>
+            <ul>docker-compose config: Проверка и вывод скомпилированной конфигурации </ul>
+            <p></p> 
+          </div>
+        </div>
+
+        <div class="nested-block">LINUX COMMANDS
+          <div class="nested-content">
+            <p> ls Список файлов и директорий</p>
+              <ul>-a: Включение скрытых файлов в вывод.</ul>
+              <ul>-h: Человекочитаемые размеры файлов </ul>
+              <ul>-l:Отображение детальной информации о файлах.</ul>
+              <ul>-S Сортировать результаты по размеру (size)</ul>
+            <p>cd: Смена текущей директории.</p>
+            <p>pwd: Отображение текущего пути.</p>
+            <p>mkdir: Создание новой директории.</p>
+            <p>rm</p>
+              <ul>-r: Рекурсивное удаление директории.</ul>
+              <ul>-f: Принудительное удаление без подтверждения.</ul>
+            <p>cp </p>
+              <ul>--r: Рекурсивное копирование директории.</ul>
+              <ul>-a: со всеми атрибутами, включая идентификаторы владельцев и права доступа (без - стандартные права)</ul>
+            <p>mv: Перемещение/переименование файлов или директорий.</p>
+
+            <p>cat: Вывод содержимого файла.  </p>
+            <p>less / more: Постраничный просмотр файла.</p>
+            <p>nano: Простой текстовый редактор.</p>
+            <p>vim / vi: Мощный текстовый редактор.</p>
+            <p>grep: Поиск текста в файлах.</p>
+
+            <p> ps — выводит список процессов, выполняющихся в текущий момент</p>
+            <p>kill — посылает сигнал процессу.</p>
+            <p>printenv - список переменных окружения</p>
+            <p>ping — — посылает пакеты</p>
+            <p>traceroute — выводит трассировку маршрута пакетов к сетевому узлу.</p>
+            <p>ssh — клиент OpenSSH SSH</p>
+            <p>netstat — вывод параметров настройки сети и статистик</p>
+          </div>
+        </div>
+
+        <div class="nested-block">КАТАЛОГИ Linux
+          <div class="nested-content">
+            <p>/bin Содержит двоичные (binaries) файлы (программы), необходимые для загрузки и функционирования системы</p>
+            <p>/boot Содержит ядро Linux</p>
+            <p>/dev список всех известных ему устройств</p>
+            <p>/etc системные конфигурационные файлы</p>
+            <p>/home домашний каталог простых пользователей</p>
+            <p>/lib Содержит файлы разделяемых библиотек, используемых основными системными программами</p>
+            <p>/opt я для установки «необязательного» (optional) программного обеспечения</p>
+            <p>/usr я все программы и файлы поддержки, используемые
+              обычными пользователями</p>
+          </div>
+        </div>
+
+        <div class="nested-block">ЖЕСТКИЕ и СИМВОЛИЧЕСКИЕ ссылки
+          <div class="nested-content">
+            <p>Жесткая ссылка не может указывать на файл за пределами собственной файловой системы.</p>
+            <p>Символическая не имеет таких ограничений</p>
+            <p>Если попытаться что-то записать в символическую ссылку, запись будет выполнена в файл, на который она указывает.</p>
+            <p>ССылки нужны, чтобы давать простые имена для файлов или каталогов (foo-v.2.3 - версия будет изменяться, а название ссылки нет)</p>
+          </div>
+        </div>
+
+        <div class="nested-block">Перенаправление вывода
+          <div class="nested-content">
+            <p>ls -l > directory_listing.txt -  вывод команды ls -l будет записан в файл directory_listing.txt.</p>
+            <p>echo "New line of text" >> my_file.txt  - для добавления стандартного вывода в конец файла, сохраняя существующее содержимое файла.</p>
+            <p>ls -l non_existent_file 2> error_log.txt  - Команда 2> используется для перенаправления стандартного вывода ошибок </p>
+            <p>ls -l non_existent_file &> output_and_errors.txt  - &> используется для перенаправления как стандартного вывода, так и стандартной ошибки в один файл.</p>
+            <p>cat my_file.txt | grep "search_term" - Пайплайн (|) позволяет передавать вывод одной команды в качестве ввода другой.
+              содержимое файла my_file.txt будет передано на вход команды grep для поиска определенного термина.
+            </p>
+          </div>
+        </div>
+
+        <div class="nested-block">ПРАВА ДОСТУПА
+          <div class="nested-content">
+            <p>Права на файл, на группу, на всех 777 - полный доступ всем на все</p>
+            <p>Восьмеричное Двоичное Режим доступа</p>
+            <p>0  000   ---</p>
+            <p>1  001   --x</p>
+            <p>2  010   -w3 011 -wx</p>
+            <p>4  100   r--</p>
+            <p>5  101   r-x</p>
+            <p>6  110   rw</p>
+            <p>7  111 rwx</p>
+
+            <p>useradd <имя_пользователя>: Создание нового пользователя.</p>
+            <p>usermod: Изменение параметров пользователя (например, имя, домашний каталог).</p>
+            <p>passwd <имя_пользователя>: Установка пароля для пользователя.</p>
+            <p>groupadd <имя_группы>: Создание новой группы.</p>
+            <p>groupmod: Изменение параметров группы.</p>
+            <p>chmod: Изменение прав доступа к файлам и директориям.</p>
+            <p>su [-[l]] [пользователь]
+              Если указан параметр -l, запущенная командная оболочка станет оболочкой входа для указанного пользователя. </p>
+            <p></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  
+
+  <div id="block-10" class="block content">
     <div class="block">Эффективное программирование
       <div class="content">
             
