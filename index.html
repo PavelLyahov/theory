@@ -731,6 +731,88 @@
 
     </div>
  
+    <div class="block">SELENIUM
+      <div class="content">
+        
+        <div class="nested-block">Locators
+          <div class="nested-content">
+            <p>Locators are used in Selenium to find and interact with web elements on a webpage.</p>
+            <p>Common Locators:</p>
+            <ul>ID, Name, Class Name, Tag Name, Link Text</ul>
+
+            <p>CSS Selector:</p>
+            <ul>(id): Selects elements by their unique ID.
+              Example: driver.findElement(By.cssSelector("#myElementId"));</ul>
+            <ul>class: By.cssSelector(".myClass")</ul>
+            <ul>attribute: By.cssSelector("[name='username']")</ul>
+            <ul>tag name: By.cssSelector("div")</ul>
+            <ul>Hierarchy: descendant By.cssSelector("div > p")</ul>
+            <ul>pseudo-classes: (By.cssSelector("input[type='checkbox']:checked")</ul>
+            <ul>Combined conditions: By.cssSelector("input.myClass[name='username'][type='text']"))</ul>
+            <p>Advantages:</p>
+            <ul>Performance: CSS selectors are usually faster and more efficient in finding elements compared to XPath.</ul>
+            <ul>Browser support: CSS selectors are supported by all browsers, while XPath might behave differently in IE.</ul>
+            <ul>Readability: CSS selectors are often more concise and easier to read.</ul>
+            <ul>Pseudo-classes support</ul>
+
+            <p>XPath - XML Path Language Axes:</p>
+
+            <ul>ancestor:: — returns a set of ancestors.</ul>
+            <ul>ancestor-or-self:: — returns a set of ancestors and the current element.</ul>
+            <ul>child:: — returns a set of immediate child elements.</ul>
+            <ul>descendant:: — returns the complete set of descendants.</ul>
+            <ul>following:: — returns the raw set of elements below the current element.</ul>
+            <ul>following-sibling:: — returns a set of elements at the same level that come after the current element.</ul>
+            <ul>parent:: — returns the parent one level up.</ul>
+            <ul>preceding:: — returns a processed set of elements excluding ancestors.</ul>
+            <ul>preceding-sibling:: — returns a set of elements at the same level that come before the current element.</ul>
+          </div>
+        </div>
+
+        <div class="nested-block">WAITS
+          <div class="nested-content">
+            <p>Waits in Selenium are mechanisms that allow automated tests to wait for specific conditions to be met before performing the next action.</p>
+            <p>Implicit Waits:</p>
+            <ul>Implicit waits are set once and are automatically applied to every element search command.</ul>
+            <ul>Example: driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);</ul>
+            
+            <p>Explicit Waits:</p>
+            <ul>Explicit waits are used to wait for a specific condition to be met before performing the next action.</ul>
+            
+            <p>Fluent Wait:</p>
+            <ul>Fluent Wait is a subtype of Explicit Wait that provides a more flexible and convenient way to configure waits in tests. It allows setting multiple conditions for a single element and performing additional actions when the condition is not met.</ul>
+            <ul>Example:</ul>
+            <ul>FluentWait<WebDriver> wait = new FluentWait<>(driver)</ul>
+            <ul>.withTimeout(Duration.ofSeconds(30))</ul>
+            <ul>.pollingEvery(Duration.ofSeconds(5))</ul>
+            <ul>.ignoring(NoSuchElementException.class)</ul>
+            <ul>WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("myElement")))</ul>
+          </div>
+        </div>
+
+
+        <div class="nested-block">Advantages of CSS over XPath
+          <div class="nested-content">
+            <p>Simplicity and conciseness</p>
+            <p>Performance</p>
+            <p>Browser support</p>
+            <p>Knowledge of CSS is valuable not only for Selenium automation but also for web page styling</p>
+            <p>Support for pseudo-elements and pseudo-classes</p>
+          </div>
+        </div>
+
+        <div class="nested-block">pageLoadStrategy
+          <div class="nested-content">
+            <p>normal - Waits for the document.readyState (default)</p>
+            <p>eager - DOM is ready, but resources like images might still be loading</p>
+            <p>none - No waiting for DOM load when navigating to a new page</p>
+          </div>
+        </div>
+
+
+      </div>
+    
+    </div>
 
     
   </div>
